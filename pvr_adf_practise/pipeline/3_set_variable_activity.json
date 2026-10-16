@@ -1,0 +1,60 @@
+{
+	"name": "3_set_variable_activity",
+	"properties": {
+		"activities": [
+			{
+				"name": "get person name",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "person_nm",
+					"value": "shivasai"
+				}
+			},
+			{
+				"name": "get message",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "get person name",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "message",
+					"value": {
+						"value": "@concat('the person name is   ',variables('person_nm'), '  location is   ',variables('person _loc'))",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"person_nm": {
+				"type": "String"
+			},
+			"person _loc": {
+				"type": "String",
+				"defaultValue": "hyderabad"
+			},
+			"message": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-10-02T10:55:31Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

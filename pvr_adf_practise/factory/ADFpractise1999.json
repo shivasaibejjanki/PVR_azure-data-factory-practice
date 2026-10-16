@@ -1,0 +1,21 @@
+{
+	"name": "ADFpractise1999",
+	"properties": {
+		"globalParameters": {
+			"person_country": {
+				"type": "string",
+				"value": "INDIA"
+			}
+		},
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "0e795104-8607-473d-b66d-1565395c71e9",
+		"tenantId": "02261019-9f8c-4ffa-bb70-e82739089e9a"
+	}
+}

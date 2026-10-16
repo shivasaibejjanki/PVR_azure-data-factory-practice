@@ -1,0 +1,21 @@
+{
+	"name": "DS_Local_On_Prime_db_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "cust_details.json",
+				"folderPath": "outbound",
+				"fileSystem": "devcontainer"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

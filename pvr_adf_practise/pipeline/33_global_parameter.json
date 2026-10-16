@@ -1,0 +1,40 @@
+{
+	"name": "33_global_parameter",
+	"properties": {
+		"activities": [
+			{
+				"name": "get global parameter message",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "message",
+					"value": {
+						"value": "@concat('person name is ',pipeline().parameters.person_name,'person loc is ', pipeline().parameters.person_loc,'person country is ',pipeline().globalParameters.person_country)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"person_name": {
+				"type": "string"
+			},
+			"person_loc": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"message": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-10-12T04:57:04Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

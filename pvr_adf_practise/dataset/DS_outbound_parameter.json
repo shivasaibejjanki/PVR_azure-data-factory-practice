@@ -1,0 +1,27 @@
+{
+	"name": "DS_outbound_parameter",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"folder_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@concat('outbound/', dataset().folder_name)",
+					"type": "Expression"
+				},
+				"fileSystem": "devcontainer"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,236 @@
+{
+	"name": "24_getmetadata_copy_multifolder_creation_assignment",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DS_inbound_getmetadata",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "BinaryReadSettings"
+					}
+				}
+			},
+			{
+				"name": "ForEach",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata').output.childItems",
+						"type": "Expression"
+					},
+					"isSequential": true,
+					"activities": [
+						{
+							"name": "getfullname",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "FullName",
+								"value": {
+									"value": "@item().name",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "getbankname",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "getfullname",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "BankName",
+								"value": {
+									"value": "@split(variables('FullName'),'_')[0]",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "getTransactiontype",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "getbankname",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Transaction type",
+								"value": {
+									"value": "@split(variables('FullName'),'_')[1]",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "gettransactiondate",
+							"type": "SetVariable",
+							"dependsOn": [
+								{
+									"activity": "getTransactiontype",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "Transaction Date",
+								"value": {
+									"value": "@split(split(variables('FullName'), '_')[2], '.')[0]",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "gettransactiondate",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "BinarySource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true
+									},
+									"formatSettings": {
+										"type": "BinaryReadSettings"
+									}
+								},
+								"sink": {
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "DS_inbound_foreach_parameter",
+									"type": "DatasetReference",
+									"parameters": {
+										"sourcefilename": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "DS_outbound_multi_multi_folder",
+									"type": "DatasetReference",
+									"parameters": {
+										"Bankname": {
+											"value": "@variables('BankName')",
+											"type": "Expression"
+										},
+										"TransactionType": {
+											"value": "@variables('Transaction type')",
+											"type": "Expression"
+										},
+										"TransactionDate": {
+											"value": "@variables('Transaction Date')",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"variables": {
+			"FullName": {
+				"type": "String"
+			},
+			"BankName": {
+				"type": "String"
+			},
+			"Transaction Date": {
+				"type": "String"
+			},
+			"Transaction type": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-10-08T05:17:02Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

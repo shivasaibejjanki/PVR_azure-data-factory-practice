@@ -1,0 +1,128 @@
+{
+	"name": "5_set_variable_actitivy",
+	"properties": {
+		"activities": [
+			{
+				"name": "get person id",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "prsn_id",
+					"value": "101"
+				}
+			},
+			{
+				"name": "get person name",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "get person id",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "prsn_nm",
+					"value": "shivasai"
+				}
+			},
+			{
+				"name": "get person gender",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "get person name",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "prsn_gndr",
+					"value": "male"
+				}
+			},
+			{
+				"name": "get person location",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "get person gender",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "prsn_loc",
+					"value": "hyderabad"
+				}
+			},
+			{
+				"name": "print message",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "get person location",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "message",
+					"value": {
+						"value": "@concat('the person id is ' ,variables('prsn_id'),'the person name is ',variables('prsn_nm'), 'the person gender is ' , variables('prsn_gndr'),'the location is ' ,variables('prsn_loc'))",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"prsn_id": {
+				"type": "String"
+			},
+			"prsn_nm": {
+				"type": "String"
+			},
+			"prsn_gndr": {
+				"type": "String"
+			},
+			"prsn_loc": {
+				"type": "String"
+			},
+			"message": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-10-02T11:06:39Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

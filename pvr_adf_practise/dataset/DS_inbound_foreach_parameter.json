@@ -1,0 +1,28 @@
+{
+	"name": "DS_inbound_foreach_parameter",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"sourcefilename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().sourcefilename",
+					"type": "Expression"
+				},
+				"folderPath": "inbound",
+				"fileSystem": "devcontainer"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

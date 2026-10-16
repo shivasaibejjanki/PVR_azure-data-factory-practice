@@ -1,0 +1,28 @@
+{
+	"name": "DS_inbound_delete",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"filenames_ending_with_csv": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().filenames_ending_with_csv",
+					"type": "Expression"
+				},
+				"folderPath": "inbound",
+				"fileSystem": "devcontainer"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

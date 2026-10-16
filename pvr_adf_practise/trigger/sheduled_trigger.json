@@ -1,0 +1,24 @@
+{
+	"name": "sheduled_trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "38_schduled_trigger_exe_pipeline",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 1,
+				"startTime": "2026-10-13T12:14:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}

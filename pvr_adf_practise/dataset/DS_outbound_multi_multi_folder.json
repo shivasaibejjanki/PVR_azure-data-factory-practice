@@ -1,0 +1,33 @@
+{
+	"name": "DS_outbound_multi_multi_folder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"Bankname": {
+				"type": "string"
+			},
+			"TransactionType": {
+				"type": "string"
+			},
+			"TransactionDate": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@concat('outbound/', dataset().Bankname, '/', dataset().TransactionType, '/', dataset().TransactionDate)",
+					"type": "Expression"
+				},
+				"fileSystem": "devcontainer"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

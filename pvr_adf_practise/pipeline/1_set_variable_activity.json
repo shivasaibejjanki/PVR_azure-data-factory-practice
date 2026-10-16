@@ -1,0 +1,84 @@
+{
+	"name": "1_set_variable_activity",
+	"properties": {
+		"activities": [
+			{
+				"name": "name",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "name",
+					"value": "shivasai"
+				}
+			},
+			{
+				"name": "id",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "name",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "id",
+					"value": "2269952"
+				}
+			},
+			{
+				"name": "message",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "id",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "message",
+					"value": {
+						"value": "@concat(' the name is ' , variables('name') , '  and    their emp id is ' ,variables('id') ,' their location is ',variables('location'))",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"name": {
+				"type": "String"
+			},
+			"id": {
+				"type": "String"
+			},
+			"message": {
+				"type": "String"
+			},
+			"location": {
+				"type": "String",
+				"defaultValue": "hyderabad "
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-10-02T07:17:46Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,67 @@
+{
+	"name": "40_tumbling_window_exe_pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "w_start time",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "start_time",
+					"value": {
+						"value": "@pipeline().parameters.window_start_time",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "w_end_time",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "w_start time",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "end_time",
+					"value": {
+						"value": "@pipeline().parameters.window_end_time",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"window_start_time": {
+				"type": "string"
+			},
+			"window_end_time": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"start_time": {
+				"type": "String"
+			},
+			"end_time": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-10-14T01:17:18Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

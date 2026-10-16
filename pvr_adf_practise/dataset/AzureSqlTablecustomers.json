@@ -1,0 +1,26 @@
+{
+	"name": "AzureSqlTablecustomers",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "cust_id",
+				"type": "varchar"
+			},
+			{
+				"name": "cust_name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "cust_tran"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

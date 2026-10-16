@@ -1,0 +1,86 @@
+{
+	"name": "8_copy_activity_setvariable_parameter",
+	"properties": {
+		"activities": [
+			{
+				"name": "getfilename",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "filename",
+					"value": "accounts.txt"
+				}
+			},
+			{
+				"name": "Copy data",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "getfilename",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_inbound_parameter",
+						"type": "DatasetReference",
+						"parameters": {
+							"sourcefilename": {
+								"value": "@variables('filename')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_outbound_prameter",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"variables": {
+			"filename": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-10-07T08:32:01Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,21 @@
+{
+	"name": "LS_Local_On_Prime_db",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "localhost\\MSSQLSERVER01",
+			"database": "sqlpractise",
+			"encrypt": "optional",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "Local_On_Prime_db",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJiMjVmMjczNC1kZDY3LTRiMTctYTNiYS0zOTU1Y2RhMGVlNDUiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "self-hosted-integrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

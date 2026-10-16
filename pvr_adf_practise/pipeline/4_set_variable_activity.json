@@ -1,0 +1,81 @@
+{
+	"name": "4_set_variable_activity",
+	"properties": {
+		"activities": [
+			{
+				"name": "get person name",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "person_nm",
+					"value": "shivasai"
+				}
+			},
+			{
+				"name": "get message",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "get Location",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "message",
+					"value": {
+						"value": "@concat('the person name is   ',variables('person_nm'), '  location is   ',variables('person _loc'))",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "get Location",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "get person name",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "person _loc",
+					"value": "chennai"
+				}
+			}
+		],
+		"variables": {
+			"person_nm": {
+				"type": "String"
+			},
+			"person _loc": {
+				"type": "String",
+				"defaultValue": "hyderabad"
+			},
+			"message": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-10-02T10:58:59Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

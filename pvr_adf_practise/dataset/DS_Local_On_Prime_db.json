@@ -1,0 +1,32 @@
+{
+	"name": "DS_Local_On_Prime_db",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Local_On_Prime_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "OrderID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CustomerID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "OrderDate",
+				"type": "date"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "cust_dtls"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

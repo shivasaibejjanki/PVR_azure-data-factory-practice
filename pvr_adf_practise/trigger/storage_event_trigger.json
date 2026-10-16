@@ -1,0 +1,25 @@
+{
+	"name": "storage_event_trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "39_storage_event trigger_exe_pipeline",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/devcontainer/blobs/",
+			"blobPathEndsWith": "json",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/4c04255c-560c-40fc-a4a8-d05489feda11/resourceGroups/ResourceGroupFREE/providers/Microsoft.Storage/storageAccounts/discoveryprodfixp",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

@@ -1,0 +1,30 @@
+{
+	"name": "DS_outbound_multifolder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_gen2",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"foldername": {
+				"type": "string"
+			},
+			"folderdate": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": {
+					"value": "@concat('outbound/', dataset().foldername,'/',dataset().folderdate)",
+					"type": "Expression"
+				},
+				"fileSystem": "devcontainer"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

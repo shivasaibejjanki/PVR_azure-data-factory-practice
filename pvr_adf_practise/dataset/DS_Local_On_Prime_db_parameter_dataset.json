@@ -1,0 +1,31 @@
+{
+	"name": "DS_Local_On_Prime_db_parameter_dataset",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_Local_On_Prime_db",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"schema_name": {
+				"type": "string"
+			},
+			"table_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schema_name",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().table_name",
+				"type": "Expression"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

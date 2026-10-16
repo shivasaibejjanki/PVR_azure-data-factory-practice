@@ -1,0 +1,40 @@
+{
+	"name": "34_child_pipeline_parameter",
+	"properties": {
+		"activities": [
+			{
+				"name": "child variable",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "child message",
+					"value": {
+						"value": "@concat('there is a person name is ',pipeline().parameters.person_name, ' location is ',pipeline().parameters.person_loc, ' person country is ',pipeline().globalParameters.person_country)",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"person_name": {
+				"type": "string"
+			},
+			"person_loc": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"child message": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-10-12T05:47:03Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

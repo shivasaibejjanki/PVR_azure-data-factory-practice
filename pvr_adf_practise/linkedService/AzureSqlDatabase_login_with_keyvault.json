@@ -1,0 +1,24 @@
+{
+	"name": "AzureSqlDatabase_login_with_keyvault",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "azuresalserverpractise.database.windows.net",
+			"database": "azure_sql_database",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "shivasai",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "Ls_AzureKeyVault",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "sqlloginsecret"
+			}
+		}
+	}
+}

@@ -1,0 +1,114 @@
+{
+	"name": "10_copy_activity_multi_setvariable_parameter",
+	"properties": {
+		"activities": [
+			{
+				"name": "folder_name",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "foldername",
+					"value": "inbound"
+				}
+			},
+			{
+				"name": "filename",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "folder_name",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "filename",
+					"value": "welcome.txt"
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "filename",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_source_multi_parameters",
+						"type": "DatasetReference",
+						"parameters": {
+							"foldername": {
+								"value": "@variables('foldername')",
+								"type": "Expression"
+							},
+							"filenname": {
+								"value": "@variables('filename')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_sink_multi_parameters",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"variables": {
+			"foldername": {
+				"type": "String"
+			},
+			"filename": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-10-05T06:45:52Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

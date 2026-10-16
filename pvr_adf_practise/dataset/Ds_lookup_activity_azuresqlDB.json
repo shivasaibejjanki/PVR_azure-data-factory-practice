@@ -1,0 +1,26 @@
+{
+	"name": "Ds_lookup_activity_azuresqlDB",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase_login_with_keyvault",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "cust_id",
+				"type": "varchar"
+			},
+			{
+				"name": "cust_name",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "sqlpractise",
+			"table": "customer_table"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

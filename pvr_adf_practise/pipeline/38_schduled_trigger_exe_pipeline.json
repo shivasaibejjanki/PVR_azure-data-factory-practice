@@ -1,0 +1,29 @@
+{
+	"name": "38_schduled_trigger_exe_pipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "get message",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "message",
+					"value": "this is scheduled trigger"
+				}
+			}
+		],
+		"variables": {
+			"message": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-10-13T12:13:45Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

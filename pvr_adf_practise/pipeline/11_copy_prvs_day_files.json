@@ -1,0 +1,170 @@
+{
+	"name": "11_copy_prvs_day_files",
+	"properties": {
+		"activities": [
+			{
+				"name": "get current date",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "date",
+					"value": {
+						"value": "@utcNow()",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "get previous date",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "get current date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "previous_date",
+					"value": {
+						"value": "@addDays(variables('date'),-1)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "get Filedate",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "get previous date",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "FileDate",
+					"value": {
+						"value": "@formatDateTime(variables('previous_date'),'ddMMyyyy')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "filename",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "BinarySource",
+						"storeSettings": {
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
+						},
+						"formatSettings": {
+							"type": "BinaryReadSettings"
+						}
+					},
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_source_datefunctions",
+						"type": "DatasetReference",
+						"parameters": {
+							"sourcefilename": {
+								"value": "@variables('finaName')",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_outbound",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "filename",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "get Filedate",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "finaName",
+					"value": {
+						"value": "@concat('orders_',variables('FileDate'),'.txt')",
+						"type": "Expression"
+					}
+				}
+			}
+		],
+		"variables": {
+			"date": {
+				"type": "String"
+			},
+			"previous_date": {
+				"type": "String"
+			},
+			"FileDate": {
+				"type": "String"
+			},
+			"finaName": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-10-07T21:09:43Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

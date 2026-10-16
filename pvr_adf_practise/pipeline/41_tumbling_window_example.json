@@ -1,0 +1,211 @@
+{
+	"name": "41_tumbling_window_example",
+	"properties": {
+		"activities": [
+			{
+				"name": "w_start time",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "start_time",
+					"value": {
+						"value": "@pipeline().parameters.window_start_time",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "w_end_time",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "w_start time",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "end_time",
+					"value": {
+						"value": "@pipeline().parameters.window_end_time",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "get query",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "w_end_time",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "query",
+					"value": {
+						"value": "@concat(\n    ' select * from cust_tran where tran_dt > ',\n    '''',\n    variables('start_time'),\n    '''',\n    ' and tran_dt < ',\n    '''',\n    variables('end_time'),\n    ''''\n)",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "startHour",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "get query",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "start hour",
+					"value": {
+						"value": "@formatDateTime(variables('start_time'),'HH')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "end hour",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "startHour",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "start hour",
+					"value": {
+						"value": "@formatDateTime(variables('end_time'),'HH')",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "end hour",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": {
+							"value": "@variables('query')",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "AzureSqlTablecustomers",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_outbound_json_tumbling_trigger",
+						"type": "DatasetReference",
+						"parameters": {
+							"foldername": {
+								"value": "@concat(variables('start hour'),variables('end hour'))",
+								"type": "Expression"
+							},
+							"filename": {
+								"value": "@concat('cust_trans_', variables('start hour'),variables('end hour'), 'json')",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"parameters": {
+			"window_start_time": {
+				"type": "string"
+			},
+			"window_end_time": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"start_time": {
+				"type": "String"
+			},
+			"end_time": {
+				"type": "String"
+			},
+			"query": {
+				"type": "String"
+			},
+			"start hour": {
+				"type": "String"
+			},
+			"end hour": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2026-10-14T14:08:29Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
