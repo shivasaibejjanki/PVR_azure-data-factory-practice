@@ -1,0 +1,66 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ADFpractise1999"
+		},
+		"AzureSqlDatabase_password": {
+			"value": ""
+		},
+		"LS_Local_On_Prime_db_password": {
+			"value": ""
+		},
+		"ls_gen2_accountKey": {
+			"value": ""
+		},
+		"AzureSqlDatabase_properties_typeProperties_server": {
+			"value": "azuresalserverpractise.database.windows.net"
+		},
+		"AzureSqlDatabase_properties_typeProperties_database": {
+			"value": "azure_sql_database"
+		},
+		"AzureSqlDatabase_properties_typeProperties_userName": {
+			"value": "shivasai"
+		},
+		"AzureSqlDatabase_login_with_keyvault_properties_typeProperties_server": {
+			"value": "azuresalserverpractise.database.windows.net"
+		},
+		"AzureSqlDatabase_login_with_keyvault_properties_typeProperties_database": {
+			"value": "azure_sql_database"
+		},
+		"AzureSqlDatabase_login_with_keyvault_properties_typeProperties_userName": {
+			"value": "shivasai"
+		},
+		"LS_Local_On_Prime_db_properties_typeProperties_server": {
+			"value": "localhost\\MSSQLSERVER01"
+		},
+		"LS_Local_On_Prime_db_properties_typeProperties_database": {
+			"value": "sqlpractise"
+		},
+		"LS_Local_On_Prime_db_properties_typeProperties_userName": {
+			"value": "Local_On_Prime_db"
+		},
+		"Ls_AzureKeyVault_properties_typeProperties_baseUrl": {
+			"value": "https://SqlLoginPWD.vault.azure.net/"
+		},
+		"ls_gen2_properties_typeProperties_url": {
+			"value": "https://discoveryprodfixp.dfs.core.windows.net/"
+		},
+		"storage_event_trigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/4c04255c-560c-40fc-a4a8-d05489feda11/resourceGroups/ResourceGroupFREE/providers/Microsoft.Storage/storageAccounts/discoveryprodfixp"
+		},
+		"tumbling_window_trigger_example_properties_pipeline_parameters_window_start_time": {
+			"value": "@{trigger().outputs.windowStartTime}"
+		},
+		"tumbling_window_trigger_example_properties_pipeline_parameters_window_end_time": {
+			"value": "@{trigger().outputs.windowEndTime}"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
