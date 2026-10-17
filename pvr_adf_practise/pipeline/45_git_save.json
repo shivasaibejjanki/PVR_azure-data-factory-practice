@@ -1,0 +1,27 @@
+{
+	"name": "45_git_save",
+	"properties": {
+		"activities": [
+			{
+				"name": "get message",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "message",
+					"value": "save git to main"
+				}
+			}
+		],
+		"variables": {
+			"message": {
+				"type": "String"
+			}
+		},
+		"annotations": []
+	}
+}
